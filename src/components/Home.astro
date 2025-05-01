@@ -1,0 +1,229 @@
+---
+import WorldMap from './icons/WorldMap.astro';
+import SocialList from './socials-list/SocialList.astro';
+---
+
+<script>
+  function updatePath() {
+    const textMain = document.querySelector('#anim-p') as HTMLElement;
+    const path = document.querySelector('#border-path') as SVGPathElement;
+
+    if (textMain && path) {
+      path.setAttribute(
+        'd',
+        `M0,0 V${textMain.offsetHeight} H${textMain.offsetWidth} v${textMain.offsetHeight}`
+      );
+      const pathLength = path.getTotalLength();
+
+      path.style.strokeDasharray = pathLength.toString();
+      path.style.strokeDashoffset = pathLength.toString();
+    }
+  }
+
+  // Update the path when the page loads
+  window.addEventListener('DOMContentLoaded', updatePath);
+  // Update the path when the window is resized
+  window.addEventListener('resize', updatePath);
+
+  // Update the path when the window is resized (for astro)
+  document.addEventListener('astro:after-swap', updatePath);
+</script>
+
+<section class="home wrapper" id="home">
+  <section class="right">
+    <div class="profile" id="anim-p">
+      <span class="right__name">Joselu</span>
+      <h1 class="profile__role">Front-end Developer</h1>
+      <div class="profile__location smoke">
+        <WorldMap class="profile__icon" />
+        <span>Madrid - Cádiz, España</span>
+      </div>
+      <svg class="profile__fancy">
+        <defs>
+          <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" style={{ stopColor: '#DC3A2B', stopOpacity: 1 }}></stop>
+            <stop offset="100%" style={{ stopColor: '#E18510', stopOpacity: 1 }}></stop>
+          </linearGradient>
+        </defs>
+        <path id="border-path" fill="none" stroke="url(#gradient)" stroke-width="1"></path>
+      </svg>
+    </div>
+    <p class="right__description smoke">
+      Especializado en React y Next.js, con un enfoque en UX/UI para diseñar interfaces intuitivas y
+      atractivas. Me gusta mantenerme al día con las nuevas tendencias y encontrar formas de aplicarlas para
+      mejorar la experiencia del usuario.
+    </p>
+    <SocialList />
+  </section>
+  <div class="left">
+    <figure class="figure">
+      <img src="/me_avatar.webp" alt="" class="figure__img" />
+      <div class="figure__lines">
+        <div class="figure__line figure__line--1"></div>
+        <div class="figure__line figure__line--2"></div>
+        <div class="figure__line figure__line--3"></div>
+        <div class="figure__line figure__line--4"></div>
+      </div>
+    </figure>
+  </div>
+</section>
+<style>
+  .home {
+    padding: 8rem 1rem 1rem 1rem;
+    width: 100%;
+    margin-bottom: 8rem;
+
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    row-gap: 5rem;
+  }
+  .right {
+    flex-basis: 35%;
+    flex-grow: 1;
+
+    display: flex;
+    flex-direction: column;
+    row-gap: 2rem;
+    .right__description {
+      max-width: 40rem;
+      line-height: 1.5;
+      text-wrap: pretty;
+      padding: 0 1rem 0 0;
+    }
+  }
+  .right__name {
+    font-size: 1.3rem;
+    color: rgba(var(--color), 1);
+  }
+  .left {
+    padding-right: 2rem;
+    flex-basis: 25rem;
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+  }
+  @media screen and (max-width: 796px) {
+    .left {
+      justify-content: center;
+    }
+  }
+
+  .profile {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.5rem;
+
+    .profile__role {
+      font-size: clamp(3em, 9vw, 5em);
+      font-weight: 700;
+      line-height: clamp(3rem, 10vw, 5rem);
+    }
+    .profile__subtitle,
+    .profile__location {
+      line-height: 1.5rem;
+    }
+    .profile__location {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.875em;
+    }
+    .profile__icon {
+      width: 0.9rem;
+    }
+  }
+  .profile__fancy {
+    position: absolute;
+
+    width: 100%;
+    z-index: -1;
+    left: -0.7rem;
+    overflow: visible;
+  }
+
+  .figure {
+    width: fit-content;
+    position: relative;
+    .figure__img {
+      max-width: 15rem;
+      border-radius: 1rem;
+      aspect-ratio: 1/1;
+      box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+    }
+    .figure__lines {
+      position: absolute;
+      inset: -0.8rem;
+      z-index: -1;
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+
+        height: 100%;
+        background-color: rgba(var(--color), 0.2);
+        border-radius: 100%;
+        filter: blur(100px);
+      }
+    }
+    .figure__line {
+      position: absolute;
+      background-color: rgba(var(--color), 0.5);
+    }
+    .figure__line--1,
+    .figure__line--2 {
+      mask-image: linear-gradient(to top, transparent, white 4rem, white calc(100% - 4rem), transparent);
+    }
+    .figure__line--1 {
+      width: 1px;
+      right: 0;
+      top: -2rem;
+      bottom: -2rem;
+    }
+    .figure__line--2 {
+      width: 1px;
+
+      left: 0;
+      top: -2rem;
+      bottom: -2rem;
+    }
+    .figure__line--3,
+    .figure__line--4 {
+      mask-image: linear-gradient(to left, transparent, white 4rem, white calc(100% - 4rem), transparent);
+    }
+    .figure__line--3 {
+      height: 1px;
+      bottom: 0;
+      left: -2rem;
+      right: -2rem;
+    }
+    .figure__line--4 {
+      height: 1px;
+      top: 0;
+      left: -2rem;
+      right: -2rem;
+    }
+  }
+
+  .about {
+    display: flex;
+    flex-direction: column;
+    row-gap: 1.2rem;
+    .about__title {
+      font-size: 1.875em;
+    }
+  }
+  #border-path {
+    animation: draw 1s forwards 1s ease-out;
+  }
+
+  @keyframes draw {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+</style>
