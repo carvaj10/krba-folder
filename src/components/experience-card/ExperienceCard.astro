@@ -16,9 +16,9 @@ const { Content } = await work.render();
 <article class="experience-card">
   <time
     class="experience-card__date smoke"
-    datetime={`${work.data.dateStart.toDateString()} - ${work.data.dateEnd.toDateString()}`}
+    datetime={`${work.data.dateStart.toDateString()} - ${work.data.dateEnd ? work.data.dateEnd.toDateString() : 'Presente'}`}
   >
-    {formatter(work.data.dateStart)} - {formatter(work.data.dateEnd)}
+    {formatter(work.data.dateStart)} - {work.data.dateEnd ? formatter(work.data.dateEnd) : formatter(new Date())}
     ({getExperienteMonths(work.data.dateStart, work.data.dateEnd)})
   </time>
   <h2 class="experience-card__company">

@@ -6,7 +6,7 @@ const work = defineCollection({
     company: z.string(),
     role: z.string(),
     dateStart: z.date(),
-    dateEnd: z.date(),
+    dateEnd: z.date().optional(),
     location: z.string(),
     companyUrl: z.string()
   })

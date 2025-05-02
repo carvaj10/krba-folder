@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 500 120" xmlns="http://www.w3.org/2000/svg">
+  <!-- Fondo principal -->
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2a2a2a" />
+      <stop offset="100%" stop-color="#1a1a1a" />
+    </linearGradient>
+    <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffcc33" />
+      <stop offset="100%" stop-color="#ff9900" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Círculo principal (símbolo del controlador) -->
+  <circle cx="75" cy="60" r="50" fill="url(#goldGradient)" />
+  <circle cx="75" cy="60" r="40" fill="url(#bgGradient)" />
+  
+  <!-- Botones de gamepad -->
+  <circle cx="85" cy="50" r="8" fill="#ffcc33" />
+  <circle cx="105" cy="60" r="8" fill="#ffcc33" />
+  <circle cx="65" cy="50" r="8" fill="#ffcc33" />
+  <circle cx="45" cy="60" r="8" fill="#ffcc33" />
+  
+  <!-- Líneas de marca de puntuación -->
+  <line x1="65" y1="75" x2="85" y2="75" stroke="#ffcc33" stroke-width="5" stroke-linecap="round" />
+  <line x1="60" y1="85" x2="90" y2="85" stroke="#ffcc33" stroke-width="2" stroke-linecap="round" />
+  
+  <!-- Texto "GameCritic" -->
+  <g>
+    <text x="140" y="75" font-family="Arial, sans-serif" font-weight="bold" font-size="42" fill="#ffffff">GameCritic</text>
+    <text x="140" y="77" font-family="Arial, sans-serif" font-weight="bold" font-size="42" fill="#ffcc33" opacity="0.3">GameCritic</text>
+  </g>
+  
+  <!-- Texto "mobile" con efecto de ubicación -->
+  <g>
+    <text x="335" y="95" font-family="Arial, sans-serif" font-style="italic" font-size="22" fill="#ffcc33">mobile</text>
+    <!-- Ícono de ubicación -->
+    <path d="M320 90 A5 5 0 1 1 320 80 A5 5 0 1 1 320 90 Z M320 80 L320 70" stroke="#ffcc33" stroke-width="2" fill="none" />
+    <circle cx="320" cy="85" r="8" stroke="#ffcc33" stroke-width="1" fill="none" />
+  </g>
+  
+  <!-- Línea decorativa -->
+  <line x1="140" y1="85" x2="415" y2="85" stroke="#ffcc33" stroke-width="1" opacity="0.5" />
+  
+  <!-- Elementos de geolocalización -->
+  <g transform="translate(440, 60) scale(0.7)">
+    <circle cx="0" cy="0" r="15" fill="#ffcc33" opacity="0.2" />
+    <circle cx="0" cy="0" r="10" fill="#ffcc33" opacity="0.4" />
+    <circle cx="0" cy="0" r="5" fill="#ffcc33" />
+    <path d="M-15 0 L15 0 M0 -15 L0 15" stroke="#ffcc33" stroke-width="1" opacity="0.3" />
+  </g>
+  
+  <!-- Estrellas de puntuación decorativas -->
+  <path d="M30 20 L33 27 L40 28 L35 33 L36 40 L30 37 L24 40 L25 33 L20 28 L27 27 Z" fill="#ffcc33" opacity="0.6" />
+  <path d="M120 30 L122 34 L126 34 L123 37 L124 41 L120 39 L116 41 L117 37 L114 34 L118 34 Z" fill="#ffcc33" opacity="0.4" />
+  <path d="M100 15 L101 17 L103 17 L102 19 L102 21 L100 20 L98 21 L98 19 L97 17 L99 17 Z" fill="#ffcc33" opacity="0.3" />
+</svg>

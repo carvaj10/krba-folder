@@ -22,6 +22,8 @@ const { proyect } = Astro.props;
 const { Content } = await proyect.render();
 const { demoUrl, image, repoUrl, title, tags, summary } = proyect.data;
 const tegnologiesTags = tags as Technology[];
+
+const isSvg = image.src && (image.src.endsWith('svg') || image.src.includes('image/svg'));
 ---
 
 <Layout title={id}>
@@ -35,7 +37,11 @@ const tegnologiesTags = tags as Technology[];
         {title}
       </h1>
       <span class="proyect__subtitle smoke">{summary}</span>
-      <img class="proyect-info__img" src={image.src} alt={title} />
+      {isSvg ? (
+        <img class="proyect-info__img_svg" src={image.src} alt={title} />
+      ) : (
+        <img class="proyect-info__img" src={image.src} alt={title} />
+      )}
 
       <div class="proyect-info__datails">
         <div class="proyect__links">
@@ -125,6 +131,13 @@ const tegnologiesTags = tags as Technology[];
       aspect-ratio: 16/9;
       border-radius: 0.3em;
     }
+
+    .proyect-info__img_svg {
+      max-width: 50rem;
+      aspect-ratio: 20/5;
+      border-radius: 0.3em;
+    }
+
     .proyect-info__datails {
       width: 100%;
       padding: 2rem 0;
