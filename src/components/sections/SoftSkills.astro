@@ -2,47 +2,63 @@
 import SectionTitle from '@components/section-title/SectionTitle.astro';
 import SoftSkillsIcon from '../icons/SoftSkillsIcon.astro';
 ---
-
 <section class="soft wrapper">
   <SectionTitle title="Habilidades blandas">
     <SoftSkillsIcon class="section-icon" />
   </SectionTitle>
-
   <div class="soft__content">
     <article class="soft-skill">
-      <h3 class="soft-title">Trabajo en equipo</h3>
+      <h3 class="soft-title">Resolución de problemas</h3>
       <p class="soft-text smoke">
-        He cultivado mi habilidad para trabajar en equipo a través de diversas experiencias colaborativas,
-        como hackatones y mi trabajo en Oxygen.
+        He desarrollado una sólida capacidad para abordar desafíos complejos, especialmente en el análisis de datos y la 
+        optimización de procesos, lo que me ha permitido encontrar soluciones eficientes a problemas técnicos.
       </p>
       <p class="soft-text smoke">
-        Estas oportunidades me han permitido interactuar con personas de diferentes áreas y perspectivas, lo
-        que me ha enseñado la importancia de una comunicación clara, la cooperación y la empatía para alcanzar
-        metas comunes.
+        Mi enfoque metódico y analítico me ha ayudado a crear soluciones innovadoras, como sistemas de optimización 
+        que mejoran significativamente la eficiencia operativa en diversos contextos.
       </p>
     </article>
     <article class="soft-skill">
-      <h3 class="soft-title">Adaptabilidad</h3>
+      <h3 class="soft-title">Adaptabilidad tecnológica</h3>
       <p class="soft-text smoke">
-        Mi capacidad de adaptabilidad se ha desarrollado al enfrentarme a entornos y circunstancias diversas y
-        cambiantes. He aprendido a ajustar rápidamente mis enfoques, viendo el cambio como una oportunidad
-        para crecer.
+        Mi trayectoria demuestra una notable capacidad de adaptación a nuevas tecnologías y entornos de trabajo. 
+        Me mantengo constantemente actualizado sobre herramientas y metodologías emergentes para mejorar mi desempeño.
       </p>
       <p class="soft-text smoke">
-        Por ejemplo en cada hackatón, por ejemplo, he tenido que gestionar el tiempo, y mantenerme flexible
-        ante la toma de decisiones.
+        Esta versatilidad me permite enfrentar desafíos cambiantes y adoptar rápidamente nuevas aproximaciones para 
+        encontrar soluciones efectivas que generan valor tangible.
+      </p>
+    </article>
+    <article class="soft-skill">
+      <h3 class="soft-title">Comunicación efectiva</h3>
+      <p class="soft-text smoke">
+        He perfeccionado mi habilidad para comunicar información compleja de manera clara y accesible, facilitando 
+        la comprensión de conceptos técnicos para diversos tipos de audiencias.
+      </p>
+      <p class="soft-text smoke">
+        Esta capacidad para transmitir ideas de forma efectiva me ha permitido colaborar exitosamente en equipos 
+        multidisciplinarios y contribuir a la toma de decisiones estratégicas.
+      </p>
+    </article>
+    <article class="soft-skill">
+      <h3 class="soft-title">Aprendizaje continuo</h3>
+      <p class="soft-text smoke">
+        Me caracterizo por una constante curiosidad y deseo de aprender, lo que me impulsa a mantenerme actualizado 
+        sobre las últimas tendencias y tecnologías en mi campo profesional.
+      </p>
+      <p class="soft-text smoke">
+        Esta actitud de aprendizaje permanente me ha permitido adquirir nuevas competencias de forma autónoma, 
+        adaptarme a cambios rápidos en mi entorno laboral y aportar ideas frescas e innovadoras a los proyectos.
       </p>
     </article>
   </div>
 </section>
-
 <style>
   .soft {
     padding: 1rem;
     display: flex;
     flex-direction: column;
     row-gap: 2rem;
-
     margin-bottom: 7rem;
   }
   .soft__content {
@@ -55,12 +71,10 @@ import SoftSkillsIcon from '../icons/SoftSkillsIcon.astro';
       grid-template-columns: 1fr;
     }
   }
-
   .soft-skill {
     padding: 2rem;
     border-radius: 0.4rem;
     background-color: rgba(var(--color-button-muted), 0.5);
-
     --tw-ring-color: rgba(var(--muted), 1);
     --tw-ring-shadow: 0 0 0 1px var(--tw-ring-color);
     box-shadow: var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
@@ -68,7 +82,6 @@ import SoftSkillsIcon from '../icons/SoftSkillsIcon.astro';
   .soft-title {
     font-size: 1.2em;
     font-weight: 700;
-
     margin-bottom: 1rem;
   }
   .soft-text {
