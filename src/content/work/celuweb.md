@@ -3,7 +3,7 @@ company: 'Celuweb'
 role: 'Técnico en Desarrollo de Datos'
 dateStart: 2023-03-01
 location: Armenia, Quindio, Colombia
-companyUrl: ''
+companyUrl: 'https://www.celuweb.com/'
 ---
 
 Trabajo en Celuweb desarrollando soluciones avanzadas para análisis de datos y automatización de procesos:
