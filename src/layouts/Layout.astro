@@ -39,6 +39,29 @@ const { title } = Astro.props;
     <meta property="og:url" content="https://joselu-portfolio.vercel.app/" />
     <link rel="canonical" href="https://joselu-portfolio.vercel.app" />
 
+    <script is:inline>
+      const getTheme = () => {
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+          return savedTheme;
+        }
+        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'light' : 'dark';
+      };
+      const theme = getTheme();
+      document.documentElement.classList.toggle('dark', theme === 'dark');
+    </script>
+    <script>
+      const applyTheme = () => {
+        const theme = localStorage.getItem('theme');
+        if (theme) {
+          document.documentElement.classList.toggle('dark', theme === 'dark');
+        }
+      };
+      document.addEventListener('DOMContentLoaded', applyTheme);
+      document.addEventListener('astro:page-load', applyTheme);
+      document.addEventListener('astro:after-swap', applyTheme);
+    </script>
+
     <ClientRouter />
   </head>
   <body>
