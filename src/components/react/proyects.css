@@ -33,12 +33,16 @@
   border-radius: 0.3rem;
   cursor: pointer;
   transition: background-color 0.3s ease-in;
-
   background-color: rgb(255 255 255 / 0.1);
   display: flex;
   align-items: center;
   gap: 0.3em;
 }
+
+html.dark .filters__tag {
+  background-color: rgba(var(--muted), 0.5);
+}
+
 @media (hover: hover) {
   .filters__tag:hover {
     background-color: rgb(255 255 255 / 0.15);
