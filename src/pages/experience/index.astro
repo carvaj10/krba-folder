@@ -4,11 +4,6 @@ import Layout from '@layouts/Layout.astro';
 import { getCollection } from 'astro:content';
 
 const collection = await getCollection('work');
-const hackathonCollection = await getCollection('hackathon');
-
-const hackathons = hackathonCollection.sort(
-  (a, b) => new Date(b.data.dateStart).getTime() - new Date(a.data.dateStart).getTime()
-);
 
 const experiences = collection.sort(
   (a, b) => new Date(b.data.dateStart).getTime() - new Date(a.data.dateStart).getTime()
@@ -22,12 +17,6 @@ const experiences = collection.sort(
     <div class="experience__list">
       {experiences.map(async work => <ExperienceCard work={work} />)}
     </div>
-
-    <!-- <h2 class="experience__title">Hackathones</h2>
-
-    <div class="experience__list">
-      {hackathons.map(async hackathon => <ExperienceCard work={hackathon} />)}
-    </div> -->
   </main>
 </Layout>
 
