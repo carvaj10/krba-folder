@@ -1,8 +1,529 @@
 ---
 import GitHub from '@components/icons/GitHub.astro';
 import LinkedIn from '@components/icons/LinkedIn.astro';
+import PDF from '@components/icons/PDF.astro';
 import './sociaList.css';
 ---
+
+<script>
+  // Función para generar y descargar PDF con diseño moderno de dos columnas
+  async function generatePDF() {
+    try {
+      // Importar jsPDF dinámicamente
+      const { default: jsPDF } = await import('jspdf');
+
+      // Crear PDF
+      const pdf = new jsPDF('p', 'mm', 'a4');
+      const pageWidth = 210;
+      const pageHeight = 297;
+      let yPosition = 20;
+
+      // Configurar colores del diseño moderno
+      const primaryColor = [220, 58, 43]; // #DC3A2B - Naranja principal
+      const secondaryColor = [225, 133, 16]; // #E18510 - Naranja secundario
+      const darkColor = [51, 51, 51]; // #333 - Gris oscuro
+      const mediumGray = [102, 102, 102]; // #666 - Gris medio
+      const lightGray = [136, 136, 136]; // #888 - Gris claro
+      const veryLightGray = [250, 250, 250]; // #FAFAFA - Gris muy claro
+      const white = [255, 255, 255];
+
+      // Función para agregar texto con estilo
+      function addText(text, x, y, options = {}) {
+        const {
+          fontSize = 12,
+          fontStyle = 'normal',
+          color = darkColor,
+          align = 'left',
+          maxWidth = pageWidth - 30
+        } = options;
+
+        pdf.setFontSize(fontSize);
+        pdf.setFont('helvetica', fontStyle);
+        pdf.setTextColor(color[0], color[1], color[2]);
+
+        if (typeof text === 'string' && text.length > 0) {
+          const lines = pdf.splitTextToSize(text, maxWidth);
+          pdf.text(lines, x, y, { align });
+          // Calcular altura real del texto con mejor precisión
+          return lines.length * (fontSize * 0.35) + (lines.length - 1) * 1;
+        }
+        return 0;
+      }
+
+      // Función para agregar línea horizontal
+      function addLine(x, y, width, color = primaryColor, thickness = 0.5) {
+        pdf.setDrawColor(color[0], color[1], color[2]);
+        pdf.setLineWidth(thickness);
+        pdf.line(x, y, x + width, y);
+      }
+
+      // Función para agregar rectángulo de fondo
+      function addBackgroundRect(x, y, width, height, color = primaryColor) {
+        pdf.setFillColor(color[0], color[1], color[2]);
+        pdf.rect(x, y, width, height, 'F');
+      }
+
+      // Función para agregar círculo
+      function addCircle(x, y, radius, color = primaryColor) {
+        pdf.setFillColor(color[0], color[1], color[2]);
+        pdf.circle(x, y, radius, 'F');
+      }
+
+      // Función para agregar skill tag
+      function addSkillTag(text, x, y, color = secondaryColor) {
+        const textWidth = pdf.getTextWidth(text);
+        const padding = 3;
+        const tagWidth = textWidth + padding * 2;
+        const tagHeight = 6;
+
+        // Fondo del tag
+        addBackgroundRect(x, y - tagHeight / 2, tagWidth, tagHeight, color);
+
+        // Texto del tag
+        addText(text, x + padding, y + 1, {
+          fontSize: 8,
+          fontStyle: 'bold',
+          color: white
+        });
+
+        return tagWidth + 2; // Espacio entre tags
+      }
+
+      // HEADER MODERNO - Diseño limpio y profesional
+      addBackgroundRect(0, 0, pageWidth, 50, primaryColor);
+
+      // Nombre principal
+      addText('JOSE LUIS CARVAJAL', pageWidth / 2, 20, {
+        fontSize: 24,
+        fontStyle: 'bold',
+        color: white,
+        align: 'center'
+      });
+
+      // Título profesional
+      addText('Back-end Developer', pageWidth / 2, 28, {
+        fontSize: 14,
+        fontStyle: 'normal',
+        color: white,
+        align: 'center'
+      });
+
+      // Ubicación
+      addText('📍 Calarcá - Quindío, Colombia', pageWidth / 2, 35, {
+        fontSize: 10,
+        color: white,
+        align: 'center'
+      });
+
+      // Contacto en header
+      addText('linkedin.com/in/krba-jose/ • github.com/carvaj10', pageWidth / 2, 42, {
+        fontSize: 9,
+        color: white,
+        align: 'center'
+      });
+
+      yPosition = 60;
+
+      // DISEÑO DE DOS COLUMNAS
+      const leftColumnX = 15;
+      const rightColumnX = 110;
+      const columnWidth = 85;
+
+      // COLUMNA IZQUIERDA
+      let leftY = yPosition;
+
+      // PERFIL PROFESIONAL
+      addText('Perfil Profesional', leftColumnX, leftY, {
+        fontSize: 14,
+        fontStyle: 'bold',
+        color: primaryColor
+      });
+
+      addLine(leftColumnX, leftY + 2, columnWidth, primaryColor, 1);
+      leftY += 8;
+
+      const profileText = `Especializado en análisis de datos y tecnologías geo espaciales, con enfoque en optimización de rutas y visualización de información en mapas. Me apasiona transformar datos complejos en soluciones prácticas mediante Python y SQL, creando interfaces geográficas intuitivas que generan insights valiosos y mejoran la toma de decisiones basadas en localización.`;
+
+      const profileHeight = addText(profileText, leftColumnX, leftY, {
+        fontSize: 10,
+        color: darkColor,
+        maxWidth: columnWidth
+      });
+      leftY += profileHeight + 15;
+
+      // HABILIDADES TÉCNICAS
+      addText('Habilidades Técnicas', leftColumnX, leftY, {
+        fontSize: 14,
+        fontStyle: 'bold',
+        color: primaryColor
+      });
+
+      addLine(leftColumnX, leftY + 2, columnWidth, primaryColor, 1);
+      leftY += 8;
+
+      // Lenguajes de Programación
+      addText('Lenguajes de Programación', leftColumnX, leftY, {
+        fontSize: 11,
+        fontStyle: 'bold',
+        color: darkColor
+      });
+      leftY += 6;
+
+      let tagX = leftColumnX;
+      const languages = ['Python', 'SQL', 'JavaScript', 'TypeScript', 'C#'];
+      languages.forEach((lang, index) => {
+        const tagWidth = pdf.getTextWidth(lang) + 6;
+        if (tagX + tagWidth > leftColumnX + columnWidth) {
+          tagX = leftColumnX;
+          leftY += 8;
+        }
+        tagX += addSkillTag(lang, tagX, leftY);
+      });
+      leftY += 12;
+
+      // Frameworks y Librerías
+      addText('Frameworks y Librerías', leftColumnX, leftY, {
+        fontSize: 11,
+        fontStyle: 'bold',
+        color: darkColor
+      });
+      leftY += 6;
+
+      tagX = leftColumnX;
+      const frameworks = [
+        'Pandas',
+        'Scikit-learn',
+        'GeoPandas',
+        'NetworkX',
+        'Folium',
+        'React Native',
+        'Flet',
+        'FastMCP'
+      ];
+      frameworks.forEach((framework, index) => {
+        const tagWidth = pdf.getTextWidth(framework) + 6;
+        if (tagX + tagWidth > leftColumnX + columnWidth) {
+          tagX = leftColumnX;
+          leftY += 8;
+        }
+        tagX += addSkillTag(framework, tagX, leftY);
+      });
+      leftY += 12;
+
+      // Bases de Datos
+      addText('Bases de Datos', leftColumnX, leftY, {
+        fontSize: 11,
+        fontStyle: 'bold',
+        color: darkColor
+      });
+      leftY += 6;
+
+      tagX = leftColumnX;
+      const databases = ['SQL Server', 'SQLite', 'PostgreSQL', 'MongoDB'];
+      databases.forEach((db, index) => {
+        const tagWidth = pdf.getTextWidth(db) + 6;
+        if (tagX + tagWidth > leftColumnX + columnWidth) {
+          tagX = leftColumnX;
+          leftY += 8;
+        }
+        tagX += addSkillTag(db, tagX, leftY);
+      });
+      leftY += 12;
+
+      // Herramientas
+      addText('Herramientas', leftColumnX, leftY, {
+        fontSize: 11,
+        fontStyle: 'bold',
+        color: darkColor
+      });
+      leftY += 6;
+
+      tagX = leftColumnX;
+      const tools = ['Selenium', 'Playwright', 'BeautifulSoup', 'Docker', 'Git', 'Figma'];
+      tools.forEach((tool, index) => {
+        const tagWidth = pdf.getTextWidth(tool) + 6;
+        if (tagX + tagWidth > leftColumnX + columnWidth) {
+          tagX = leftColumnX;
+          leftY += 8;
+        }
+        tagX += addSkillTag(tool, tagX, leftY);
+      });
+
+      // COLUMNA DERECHA
+      let rightY = yPosition;
+
+      // EXPERIENCIA LABORAL
+      addText('Experiencia Laboral', rightColumnX, rightY, {
+        fontSize: 14,
+        fontStyle: 'bold',
+        color: primaryColor
+      });
+
+      addLine(rightColumnX, rightY + 2, columnWidth, primaryColor, 1);
+      rightY += 8;
+
+      // Experiencia 1: Celuweb
+      addText('Técnico en Desarrollo de Datos', rightColumnX, rightY, {
+        fontSize: 12,
+        fontStyle: 'bold',
+        color: darkColor
+      });
+      rightY += 5;
+
+      addText('Celuweb', rightColumnX, rightY, {
+        fontSize: 10,
+        fontStyle: 'bold',
+        color: secondaryColor
+      });
+
+      addText('Marzo 2023 - Presente • Armenia, Quindío', rightColumnX + 20, rightY, {
+        fontSize: 9,
+        color: lightGray
+      });
+      rightY += 8;
+
+      const celuwebAchievements = [
+        'Construí sistemas ETL usando SQL Server, optimizando consultas complejas',
+        'Implementé procesos de extracción de datos a gran escala con Selenium y Playwright',
+        'Desarrollé pipelines de análisis predictivo con Pandas y Scikit-learn',
+        'Diseñé rutas eficientes usando GeoPandas y NetworkX',
+        'Integré APIs de mapas para visualizar datos geográficos',
+        'Creé dashboards interactivos para análisis de datos empresariales'
+      ];
+
+      celuwebAchievements.forEach((achievement, index) => {
+        addCircle(rightColumnX + 2, rightY + 1, 1, primaryColor);
+        const achievementHeight = addText(`• ${achievement}`, rightColumnX + 6, rightY, {
+          fontSize: 9,
+          color: darkColor,
+          maxWidth: columnWidth - 10
+        });
+        rightY += achievementHeight + 2;
+      });
+      rightY += 8;
+
+      // Verificar si necesitamos nueva página
+      if (rightY > pageHeight - 100) {
+        pdf.addPage();
+        rightY = 20;
+      }
+
+      // Experiencia 2: Freelance
+      addText('Técnico en Automatización, Datos y Soporte Académico', rightColumnX, rightY, {
+        fontSize: 12,
+        fontStyle: 'bold',
+        color: darkColor
+      });
+      rightY += 5;
+
+      addText('Freelance', rightColumnX, rightY, {
+        fontSize: 10,
+        fontStyle: 'bold',
+        color: secondaryColor
+      });
+
+      addText('Junio 2022 - Diciembre 2022 • Calarcá, Quindío', rightColumnX + 20, rightY, {
+        fontSize: 9,
+        color: lightGray
+      });
+      rightY += 8;
+
+      const freelanceAchievements = [
+        'Automatizé procesos de recolección de datos mediante web scraping',
+        'Desarrollé dashboards y reportes en Excel para visualización de datos',
+        'Escribí scripts en Python para transformar archivos y limpiar datos',
+        'Apoyé a estudiantes universitarios con proyectos académicos',
+        'Asesoré en estructuración y análisis de bases de datos',
+        'Reconocido por puntualidad y soluciones prácticas'
+      ];
+
+      freelanceAchievements.forEach((achievement, index) => {
+        addCircle(rightColumnX + 2, rightY + 1, 1, primaryColor);
+        const achievementHeight = addText(`• ${achievement}`, rightColumnX + 6, rightY, {
+          fontSize: 9,
+          color: darkColor,
+          maxWidth: columnWidth - 10
+        });
+        rightY += achievementHeight + 2;
+      });
+      rightY += 8;
+
+      // Verificar si necesitamos nueva página
+      if (rightY > pageHeight - 100) {
+        pdf.addPage();
+        rightY = 20;
+      }
+
+      // Experiencia 3: Proyecto Personal
+      addText('Técnico en Optimización de Rutas', rightColumnX, rightY, {
+        fontSize: 12,
+        fontStyle: 'bold',
+        color: darkColor
+      });
+      rightY += 5;
+
+      addText('Proyecto Personal', rightColumnX, rightY, {
+        fontSize: 10,
+        fontStyle: 'bold',
+        color: secondaryColor
+      });
+
+      addText('Marzo 2022 - Junio 2022 • Calarcá, Quindío', rightColumnX + 25, rightY, {
+        fontSize: 9,
+        color: lightGray
+      });
+      rightY += 8;
+
+      const projectAchievements = [
+        'Implementé algoritmo de optimización que redujo 28% los tiempos de entrega',
+        'Automatizé flujo de datos con pipeline ETL integrando múltiples fuentes',
+        'Usé NetworkX para calcular trayectorias eficientes',
+        'Presenté resultados en dashboards con visualización interactiva'
+      ];
+
+      projectAchievements.forEach((achievement, index) => {
+        addCircle(rightColumnX + 2, rightY + 1, 1, primaryColor);
+        const achievementHeight = addText(`• ${achievement}`, rightColumnX + 6, rightY, {
+          fontSize: 9,
+          color: darkColor,
+          maxWidth: columnWidth - 10
+        });
+        rightY += achievementHeight + 2;
+      });
+      rightY += 15;
+
+      // PROYECTOS DESTACADOS
+      addText('Proyectos Destacados', rightColumnX, rightY, {
+        fontSize: 14,
+        fontStyle: 'bold',
+        color: primaryColor
+      });
+
+      addLine(rightColumnX, rightY + 2, columnWidth, primaryColor, 1);
+      rightY += 8;
+
+      // Proyecto 1: GameCritic
+      addText('GameCritic - Aplicación Móvil', rightColumnX, rightY, {
+        fontSize: 11,
+        fontStyle: 'bold',
+        color: darkColor
+      });
+      rightY += 4;
+
+      addText('React Native • Expo • Axios • Tailwind CSS', rightColumnX, rightY, {
+        fontSize: 9,
+        fontStyle: 'bold',
+        color: secondaryColor
+      });
+
+      addText('GitHub: carvaj10/curso-react-native', rightColumnX, rightY + 3, {
+        fontSize: 8,
+        color: lightGray
+      });
+      rightY += 8;
+
+      const gamecriticDesc =
+        'Aplicación móvil que permite ver reseñas de juegos populares con sistema de geolocalización para encontrar tiendas físicas cercanas. Incluye modo oscuro y navegación intuitiva.';
+      const gamecriticHeight = addText(gamecriticDesc, rightColumnX, rightY, {
+        fontSize: 9,
+        color: darkColor,
+        maxWidth: columnWidth
+      });
+      rightY += gamecriticHeight + 8;
+
+      // Verificar si necesitamos nueva página
+      if (rightY > pageHeight - 80) {
+        pdf.addPage();
+        rightY = 20;
+      }
+
+      // Proyecto 2: KRBA Manhwa Reader
+      addText('KRBA Manhwa Reader - Aplicación Multiplataforma', rightColumnX, rightY, {
+        fontSize: 11,
+        fontStyle: 'bold',
+        color: darkColor
+      });
+      rightY += 4;
+
+      addText('Python • Flet • Requests • SQLite', rightColumnX, rightY, {
+        fontSize: 9,
+        fontStyle: 'bold',
+        color: secondaryColor
+      });
+
+      addText('GitHub: carvaj10/app-mawha', rightColumnX, rightY + 3, {
+        fontSize: 8,
+        color: lightGray
+      });
+      rightY += 8;
+
+      const manhwaDesc =
+        'Aplicación multiplataforma desarrollada en Python con Flet para lectura de manhwas. Incluye biblioteca personalizable, modo offline, notificaciones y sincronización entre dispositivos.';
+      const manhwaHeight = addText(manhwaDesc, rightColumnX, rightY, {
+        fontSize: 9,
+        color: darkColor,
+        maxWidth: columnWidth
+      });
+      rightY += manhwaHeight + 8;
+
+      // Verificar si necesitamos nueva página
+      if (rightY > pageHeight - 80) {
+        pdf.addPage();
+        rightY = 20;
+      }
+
+      // Proyecto 3: MCP Libres
+      addText('MCP Libres - Colección de Model Context Protocols', rightColumnX, rightY, {
+        fontSize: 11,
+        fontStyle: 'bold',
+        color: darkColor
+      });
+      rightY += 4;
+
+      addText('Python • FastMCP • Open Source', rightColumnX, rightY, {
+        fontSize: 9,
+        fontStyle: 'bold',
+        color: secondaryColor
+      });
+
+      addText('GitHub: carvaj10/mcp_libres', rightColumnX, rightY + 3, {
+        fontSize: 8,
+        color: lightGray
+      });
+      rightY += 8;
+
+      const mcpDesc =
+        'Colección completa de 11 MCPs especializados desarrollados con FastMCP para diferentes tareas de desarrollo y automatización. Incluye herramientas para gestión de archivos, procesamiento de texto, análisis de datos y más.';
+      const mcpHeight = addText(mcpDesc, rightColumnX, rightY, {
+        fontSize: 9,
+        color: darkColor,
+        maxWidth: columnWidth
+      });
+
+      // Descargar el PDF
+      pdf.save('CV_Jose_Luis_Carvajal.pdf');
+    } catch (error) {
+      console.error('Error al generar PDF:', error);
+      alert('Error al generar el PDF. Asegúrate de que la librería jsPDF esté instalada.');
+    }
+  }
+
+  // Agregar event listener cuando el DOM esté listo
+  document.addEventListener('DOMContentLoaded', () => {
+    const pdfButton = document.getElementById('download-pdf');
+    if (pdfButton) {
+      pdfButton.addEventListener('click', generatePDF);
+    }
+  });
+
+  // También agregar el listener después de navegación de Astro
+  document.addEventListener('astro:after-swap', () => {
+    const pdfButton = document.getElementById('download-pdf');
+    if (pdfButton) {
+      pdfButton.addEventListener('click', generatePDF);
+    }
+  });
+</script>
 
 <ul class="social">
   <li class="social__item">
@@ -27,6 +548,12 @@ import './sociaList.css';
     >
       <GitHub class="social__icon" />
       Github</a
+    >
+  </li>
+  <li class="social__item">
+    <button class="social__link social__button" id="download-pdf" aria-label="Descargar CV en PDF">
+      <PDF class="social__icon" />
+      CV PDF</button
     >
   </li>
   <!-- <li class="social__item">

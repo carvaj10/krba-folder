@@ -27,3 +27,13 @@
   align-items: center;
   gap: 0.3rem;
 }
+
+.social__button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: inherit;
+  font-family: inherit;
+  font-size: inherit;
+  text-decoration: none;
+}

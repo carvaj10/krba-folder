@@ -17,6 +17,8 @@
     "@types/react-dom": "^18.3.1",
     "astro": "^5.0.2",
     "cal-sans": "^1.0.1",
+    "html2canvas": "^1.4.1",
+    "jspdf": "^3.0.3",
     "prettier": "^3.3.3",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
