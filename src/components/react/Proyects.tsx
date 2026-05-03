@@ -1,10 +1,10 @@
-import type { CollectionEntry } from 'astro:content';
 import { useState } from 'react';
 import { ProyectCard } from './ProyectCard';
 import './proyects.css';
+import type { ProyectItem } from './ProyectCard';
 
 type Props = {
-  initialProyects: CollectionEntry<'projects'>[];
+  initialProyects: ProyectItem[];
 };
 
 const TAGS = ['Python', 'Expo', 'React Native', 'Flet'];
@@ -26,7 +26,7 @@ export const Proyects = ({ initialProyects }: Props) => {
   const filteredProyects = proyects.filter(proyect =>
     Array.from(filterByTag).every(tag => {
       const tagLowerCase = tag.toLowerCase();
-      const tagsLowerCase = proyect.data.tags.map(tag => tag.toLowerCase());
+      const tagsLowerCase = proyect.data.tags.map((t: string) => t.toLowerCase());
       return tagsLowerCase.includes(tagLowerCase);
     })
   );
@@ -82,7 +82,7 @@ export const Proyects = ({ initialProyects }: Props) => {
         </h2>
         <div className="proyects__list">
           {filteredProyects.map(proyect => (
-            <ProyectCard key={proyect.slug} proyect={proyect} />
+            <ProyectCard key={proyect.id} proyect={proyect} />
           ))}
         </div>
       </section>

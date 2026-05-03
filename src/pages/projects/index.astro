@@ -1,9 +1,18 @@
 ---
-import { Proyects } from '@components/react/Proyects';
+import { Proyects } from 'src/components/react/Proyects';
 import Layout from '@layouts/Layout.astro';
 import { getProjectsCollection } from 'src/utils/getProjectsCollection';
 
-const projects = await getProjectsCollection();
+const projectEntries = await getProjectsCollection();
+const projects = projectEntries.map(({ id, data }) => ({
+  id,
+  data: {
+    title: data.title,
+    summary: data.summary,
+    isInConstruction: data.isInConstruction,
+    tags: data.tags
+  }
+}));
 ---
 
 <Layout title="Proyectos">

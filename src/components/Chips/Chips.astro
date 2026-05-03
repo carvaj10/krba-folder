@@ -2,7 +2,7 @@
 import DockerIcon from '@components/icons/dev/DockerIcon.astro';
 import PostgreSQL from '@components/icons/dev/PostgreSQL.astro';
 import Tailwind from '@components/icons/dev/Tailwind.astro';
-import type { Technology } from '@interfaces/types';
+import type { Technology } from 'src/interfaces/types';
 import NumpyIcon from '../icons/dev/NumpyIcon.astro';
 import AstroIcon from '../icons/dev/AstroIcon.astro';
 import CssIcon from '../icons/dev/CssIcon.astro';
@@ -32,14 +32,13 @@ const iconShip = {
   Net: Net
 } as const;
 
-type Technology = keyof typeof iconShip;
-
+type IconKey = keyof typeof iconShip;
 ---
 
 <ul class="chips">
   {
     tegnologies.map(teg => {
-      const IconComponent = iconShip[teg];
+      const IconComponent = iconShip[teg as IconKey];
       return (
         <li class="chip">
           {withIcon && IconComponent && <IconComponent class="ship__icon" />} {teg}

@@ -1,16 +1,25 @@
-import type { CollectionEntry } from 'astro:content';
 import { Chips } from './Chips';
 import './proyectCard.css';
 
+export type ProyectItem = {
+  id: string;
+  data: {
+    title: string;
+    summary: string;
+    isInConstruction: boolean;
+    tags: string[];
+  };
+};
+
 type Props = {
-  proyect: CollectionEntry<'projects'>;
+  proyect: ProyectItem;
 };
 export const ProyectCard = ({ proyect }: Props) => {
   const { title, summary, isInConstruction, tags } = proyect.data;
 
   return (
     <article className="proyect">
-      <a className="proyect__link" href={`/info-proyects/${proyect.slug}`}>
+      <a className="proyect__link" href={`/info-proyects/${proyect.id}`}>
         <header className="proyect__header">
           <h2 className="proyect__title" style={{ viewTransitionName: `${title}-title` }}>
             {/* <Folder className="proyect__icon" /> */}

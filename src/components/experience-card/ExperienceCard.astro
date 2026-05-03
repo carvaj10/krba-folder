@@ -1,6 +1,7 @@
 ---
 import ArrowShortDown from '@components/icons/ArrowShortDown.astro';
 import type { CollectionEntry } from 'astro:content';
+import { render } from 'astro:content';
 import { formatter } from 'src/utils/formatter';
 import { getExperienteMonths } from 'src/utils/getExperienteMonths';
 import './experienceCard.css';
@@ -10,7 +11,7 @@ type Props = {
 };
 
 const { work } = Astro.props;
-const { Content } = await work.render();
+const { Content } = await render(work);
 ---
 
 <article class="experience-card">
@@ -18,7 +19,9 @@ const { Content } = await work.render();
     class="experience-card__date smoke"
     datetime={`${work.data.dateStart.toDateString()} - ${work.data.dateEnd ? work.data.dateEnd.toDateString() : 'Presente'}`}
   >
-    {formatter(work.data.dateStart)} - {work.data.dateEnd ? formatter(work.data.dateEnd) : formatter(new Date())}
+    {formatter(work.data.dateStart)} - {
+      work.data.dateEnd ? formatter(work.data.dateEnd) : formatter(new Date())
+    }
     ({getExperienteMonths(work.data.dateStart, work.data.dateEnd)})
   </time>
   <h2 class="experience-card__company">

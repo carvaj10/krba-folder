@@ -1,6 +1,6 @@
 ---
 import Chips from '@components/Chips/Chips.astro';
-import type { Technology } from '@interfaces/types';
+import type { Technology } from 'src/interfaces/types';
 import type { CollectionEntry } from 'astro:content';
 import Folder from '../icons/Folder.astro';
 
@@ -14,7 +14,7 @@ const tegnologiesTags = tags as Technology[];
 ---
 
 <article class="proyect">
-  <a class="proyect__link" href={`/info-proyects/${proyect.slug}`}>
+  <a class="proyect__link" href={`/info-proyects/${proyect.id}`}>
     <header class="proyect__header">
       <h2 class="proyect__title" transition:name={`${title}-title`}>
         <Folder class="proyect__icon" />
