@@ -7,9 +7,37 @@ import '../styles/reset.css';
 
 interface Props {
   title: string;
+  description?: string;
+  ogImage?: string;
 }
 
-const { title } = Astro.props;
+const {
+  title,
+  description = 'Jose Luis Carvajal — Back-end Developer especializado en análisis de datos y tecnologías geoespaciales. Python, SQL, TypeScript.',
+  ogImage = 'https://krba.vercel.app/krba-jose.webp'
+} = Astro.props;
+
+const canonicalUrl = new URL(Astro.url.pathname, 'https://krba.vercel.app').toString();
+
+const personJsonLd = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Jose Luis Carvajal',
+  url: 'https://krba.vercel.app',
+  image: 'https://krba.vercel.app/krba-jose.webp',
+  jobTitle: 'Back-end Developer',
+  description:
+    'Especializado en análisis de datos y tecnologías geoespaciales, con enfoque en optimización de rutas y visualización de información en mapas.',
+  sameAs: ['https://www.linkedin.com/in/krba-jose/', 'https://github.com/carvaj10'],
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Calarcá',
+    addressRegion: 'Quindío',
+    addressCountry: 'CO'
+  },
+  knowsAbout: ['Python', 'SQL', 'TypeScript', 'GeoPandas', 'NetworkX', 'Docker', 'FastMCP']
+});
+
 ---
 
 <!doctype html>
@@ -17,29 +45,33 @@ const { title } = Astro.props;
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
-    <title>{title}</title>
+    <title>{title} | Krba</title>
     <link rel="icon" type="image/svg+xml" href="/code.svg" />
 
+    <meta name="description" content={description} />
     <meta name="google-site-verification" content="wv87OJueVbvKt-_SENjNZ5dddnnsAkvAEJi133M0uyg" />
 
-    <!-- Open Graph Meta Tags -->
-    <meta property="description" content="Jose luis Back End Developer - TypeScript - Python - Astro" />
-    <meta property="og:title" content="Jose luis Back End Developer" />
-    <meta property="og:description" content="Jose luis - TypeScript - Python - Astro" />
-    <meta property="og:url" content="https://krba.vercel.app/" />
+    <!-- Open Graph -->
+    <meta property="og:title" content={`${title} | Krba`} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
     <meta property="og:type" content="website" />
-    <meta property="og:image" content="https://krba.vercel.app/krba-jose.webp" />
+    <meta property="og:image" content={ogImage} />
     <meta property="og:locale" content="es_ES" />
-    <meta property="og:site_name" content="Jose luis Back End Developer" />
+    <meta property="og:site_name" content="Jose Luis Carvajal — Back-end Developer" />
 
+    <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@Krba" />
     <meta name="twitter:creator" content="@Krba" />
-    <meta name="twitter:title" content="Jose luis Back End Developer" />
-    <meta name="twitter:description" content="Jose luis Back End Developer - TypeScript - Python - Astro" />
+    <meta name="twitter:title" content={`${title} | Krba`} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
 
-    <meta property="og:url" content="https://krba.vercel.app/" />
-    <link rel="canonical" href="https://krba.vercel.app" />
+    <link rel="canonical" href={canonicalUrl} />
+
+    <!-- JSON-LD -->
+    <script is:inline type="application/ld+json" set:html={personJsonLd} />
 
     <script is:inline>
       const getTheme = () => {
@@ -67,11 +99,28 @@ const { title } = Astro.props;
     <ClientRouter />
   </head>
   <body>
+    <a href="#main-content" class="skip-link">Saltar al contenido principal</a>
     <Header />
     <slot />
   </body>
 </html>
 <style is:global>
+  .skip-link {
+    position: absolute;
+    top: -100%;
+    left: 1rem;
+    padding: 0.5rem 1rem;
+    background-color: rgba(var(--color), 1);
+    color: #fff;
+    border-radius: 0 0 0.25rem 0.25rem;
+    font-weight: 600;
+    z-index: 9999;
+    transition: top 0.2s ease;
+  }
+  .skip-link:focus {
+    top: 0;
+  }
+
   .wrapper {
     max-width: 1200px;
     margin-left: auto;

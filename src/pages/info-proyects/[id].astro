@@ -25,10 +25,28 @@ const { demoUrl, image, repoUrl, title, tags, summary } = proyect.data;
 const tegnologiesTags = tags as Technology[];
 
 const isSvg = image.src && (image.src.endsWith('svg') || image.src.includes('image/svg'));
+
+const projectJsonLd = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: title,
+  description: summary,
+  image: image.src,
+  url: demoUrl ?? repoUrl,
+  codeRepository: repoUrl,
+  author: {
+    '@type': 'Person',
+    name: 'Jose Luis Carvajal',
+    url: 'https://krba.vercel.app'
+  },
+  applicationCategory: 'DeveloperApplication',
+  keywords: (tags as string[]).join(', ')
+});
 ---
 
-<Layout title={id}>
-  <main class="proyect-info wrapper">
+<Layout title={title} description={summary}>
+  <script is:inline type="application/ld+json" set:html={projectJsonLd} />
+  <main id="main-content" class="proyect-info wrapper">
     <div>
       <button class="go-back__btn" onclick="history.back()" aria-label="boton para ir a los proyectos">
         <ArrowBackIcon class="go-back__arrow" />
@@ -40,9 +58,9 @@ const isSvg = image.src && (image.src.endsWith('svg') || image.src.includes('ima
       <span class="proyect__subtitle smoke">{summary}</span>
       {
         isSvg ? (
-          <img class="proyect-info__img_svg" src={image.src} alt={title} />
+          <img class="proyect-info__img_svg" src={image.src} alt={title} loading="lazy" decoding="async" />
         ) : (
-          <img class="proyect-info__img" src={image.src} alt={title} />
+          <img class="proyect-info__img" src={image.src} alt={title} loading="lazy" decoding="async" />
         )
       }
 

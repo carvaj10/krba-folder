@@ -3,8 +3,10 @@ import ThemeToggle from '../icons/ToggleIcon.astro'; // Ajusta la ruta correcta
 
 const links = [
   { href: '/', text: 'Inicio' },
+  { href: '/about', text: 'Sobre mí' },
   { href: '/projects', text: 'Proyectos' },
-  { href: '/experience', text: 'Experiencia' }
+  { href: '/experience', text: 'Experiencia' },
+  { href: '/contact', text: 'Contacto' }
 ];
 const normalizePath = (path: string) => path.replace(/\/$/, '') || '/';
 const currentPage = normalizePath(Astro.url.pathname);

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://krba.vercel.app/sitemap-index.xml

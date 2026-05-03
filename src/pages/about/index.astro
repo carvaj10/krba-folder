@@ -1,0 +1,197 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Chips from '../../components/Chips/Chips.astro';
+import type { Technology } from '../../interfaces/types';
+
+const mainStack = ['Python', 'TypeScript', 'Docker', 'PostgreSQL', 'Astro'] as Technology[];
+---
+
+<Layout
+  title="Sobre mí"
+  description="Conoce más sobre Jose Luis Carvajal, Back-end Developer especializado en análisis de datos, Python, SQL y tecnologías geoespaciales."
+>
+  <main id="main-content" class="about wrapper">
+    <div class="about__hero">
+      <figure class="about__figure">
+        <img
+          src="/krba-jose.webp"
+          alt="Jose Luis Carvajal"
+          class="about__img"
+          loading="eager"
+          decoding="async"
+        />
+      </figure>
+      <div class="about__intro">
+        <span class="about__greeting smoke">Hola, soy</span>
+        <h1 class="about__name">Jose Luis Carvajal</h1>
+        <span class="about__role">Back-end Developer</span>
+        <p class="about__bio smoke">
+          Me especializo en análisis de datos y tecnologías geoespaciales, con enfoque en
+          optimización de rutas y visualización de información en mapas. Me apasiona transformar
+          datos complejos en soluciones prácticas mediante Python y SQL, creando interfaces
+          geográficas intuitivas que generan insights valiosos y mejoran la toma de decisiones
+          basadas en localización.
+        </p>
+        <p class="about__bio smoke">
+          Actualmente trabajo en <strong>Celuweb</strong> como Técnico en Desarrollo de Datos,
+          donde construyo sistemas ETL, pipelines de análisis predictivo y rutas eficientes
+          integrando datos geoespaciales con visualizaciones interactivas.
+        </p>
+      </div>
+    </div>
+
+    <section class="about__section">
+      <h2 class="about__section-title">Stack principal</h2>
+      <Chips tegnologies={mainStack} withIcon />
+    </section>
+
+    <section class="about__section">
+      <h2 class="about__section-title">Un poco más</h2>
+      <ul class="about__facts smoke">
+        <li>📍 Calarcá, Quindío, Colombia</li>
+        <li>💼 Abierto a proyectos freelance y colaboraciones remotas</li>
+        <li>🗣️ Español nativo · Inglés técnico</li>
+        <li>
+          ⚡ Contribuidor open source — autor de <a
+            href="https://github.com/carvaj10/mcp_libres"
+            target="_blank"
+            rel="noopener noreferrer">mcp_libres</a
+          >
+        </li>
+      </ul>
+    </section>
+
+    <div class="about__cta">
+      <a class="about__btn about__btn--primary" href="/contact">Escríbeme</a>
+      <a class="about__btn about__btn--secondary" href="/projects">Ver proyectos</a>
+    </div>
+  </main>
+</Layout>
+
+<style>
+  .about {
+    padding: 8rem 1rem 4rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 3.5rem;
+  }
+
+  .about__hero {
+    display: grid;
+    grid-template-columns: 12rem 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+
+  @media (max-width: 600px) {
+    .about__hero {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .about__figure {
+    width: 12rem; /* override reset.css que pone width: 100% en figure */
+  }
+
+  .about__img {
+    width: 12rem;
+    height: 12rem;
+    border-radius: 1rem;
+    object-fit: cover;
+    box-shadow: 0 0 0 1px rgba(var(--muted), 1);
+  }
+
+  .about__intro {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .about__greeting {
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .about__name {
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 700;
+    line-height: 1.1;
+  }
+
+  .about__role {
+    font-size: 1.125rem;
+    color: rgba(var(--color), 1);
+    font-weight: 600;
+  }
+
+  .about__bio {
+    font-size: 0.9375rem;
+    line-height: 1.7;
+    max-width: 42rem;
+    text-wrap: pretty;
+  }
+
+  .about__bio strong {
+    color: rgba(var(--color-text-base), 1);
+    font-weight: 600;
+  }
+
+  .about__section {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .about__section-title {
+    font-size: 1.125rem;
+    font-weight: 700;
+  }
+
+  .about__facts {
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+    font-size: 0.9375rem;
+    line-height: 1.6;
+  }
+
+  .about__facts a {
+    color: rgba(var(--color), 1);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .about__cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .about__btn {
+    padding: 0.65rem 1.5rem;
+    border-radius: 0.375rem;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+    cursor: pointer;
+  }
+
+  .about__btn--primary {
+    background-color: rgba(var(--color), 1);
+    color: #fff;
+  }
+
+  .about__btn--primary:hover {
+    background-color: rgba(var(--color-button-accent-hover), 1);
+  }
+
+  .about__btn--secondary {
+    border: 1px solid rgba(255 255 255 / 0.25);
+  }
+
+  .about__btn--secondary:hover {
+    background-color: rgba(var(--color-button-muted), 0.5);
+  }
+</style>

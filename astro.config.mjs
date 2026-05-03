@@ -1,7 +1,8 @@
+import sitemap from '@astrojs/sitemap';
 import react from '@astrojs/react';
 import { defineConfig } from 'astro/config';
 
-// https://astro.build/config
 export default defineConfig({
-  integrations: [react()]
+  site: 'https://krba.vercel.app',
+  integrations: [react(), sitemap()]
 });

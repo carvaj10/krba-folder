@@ -1,0 +1,73 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Página no encontrada" description="Esta página no existe. Vuelve al inicio del portafolio de Jose Luis Carvajal.">
+  <main id="main-content" class="not-found wrapper">
+    <div class="not-found__content">
+      <span class="not-found__code smoke">404</span>
+      <h1 class="not-found__title">Página no encontrada</h1>
+      <p class="not-found__description smoke">
+        La ruta que buscas no existe o fue movida. No te pierdas, vuelve al inicio.
+      </p>
+      <a class="not-found__btn" href="/">Volver al inicio</a>
+    </div>
+  </main>
+</Layout>
+
+<style>
+  .not-found {
+    min-height: 100vh;
+    padding: 8rem 1rem 4rem 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .not-found__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    text-align: center;
+    max-width: 30rem;
+  }
+
+  .not-found__code {
+    font-size: clamp(5rem, 20vw, 10rem);
+    font-family: 'Cal Sans', system-ui, sans-serif;
+    font-weight: 700;
+    line-height: 1;
+    background: linear-gradient(135deg, rgba(var(--color), 1), #e18510);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .not-found__title {
+    font-size: clamp(1.5rem, 4vw, 2rem);
+    font-weight: 700;
+  }
+
+  .not-found__description {
+    font-size: 1rem;
+    line-height: 1.6;
+    text-wrap: pretty;
+  }
+
+  .not-found__btn {
+    margin-top: 0.5rem;
+    padding: 0.65rem 1.5rem;
+    border-radius: 0.375rem;
+    background-color: rgba(var(--color), 1);
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: background-color 0.2s ease;
+    cursor: pointer;
+  }
+
+  .not-found__btn:hover {
+    background-color: rgba(var(--color-button-accent-hover), 1);
+  }
+</style>

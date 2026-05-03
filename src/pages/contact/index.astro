@@ -1,0 +1,308 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import GitHub from '@components/icons/GitHub.astro';
+import LinkedIn from '@components/icons/LinkedIn.astro';
+import Email from '@components/icons/Email.astro';
+
+const email = 'joseluiscarvajal19@gmail.com';
+---
+
+<Layout
+  title="Contacto"
+  description="Contáctame para hablar sobre proyectos, colaboraciones o cualquier consulta. Jose Luis Carvajal — Back-end Developer."
+>
+  <main id="main-content" class="contact wrapper">
+    <div class="contact__header">
+      <h1 class="contact__title">Hablemos</h1>
+      <p class="contact__subtitle smoke">
+        ¿Tienes un proyecto en mente, una pregunta o simplemente quieres conectar? Escríbeme.
+      </p>
+    </div>
+
+    <div class="contact__layout">
+      <section class="contact__form-section">
+        <form id="contact-form" class="contact-form" novalidate>
+          <div class="contact-form__group">
+            <label class="contact-form__label" for="cf-name">Nombre</label>
+            <input
+              id="cf-name"
+              class="contact-form__input"
+              type="text"
+              name="name"
+              placeholder="Tu nombre"
+              required
+              minlength="2"
+            />
+          </div>
+
+          <div class="contact-form__group">
+            <label class="contact-form__label" for="cf-email">Correo</label>
+            <input
+              id="cf-email"
+              class="contact-form__input"
+              type="email"
+              name="email"
+              placeholder="tu@correo.com"
+              required
+            />
+          </div>
+
+          <div class="contact-form__group">
+            <label class="contact-form__label" for="cf-subject">Asunto</label>
+            <input
+              id="cf-subject"
+              class="contact-form__input"
+              type="text"
+              name="subject"
+              placeholder="¿En qué puedo ayudarte?"
+              required
+            />
+          </div>
+
+          <div class="contact-form__group">
+            <label class="contact-form__label" for="cf-message">Mensaje</label>
+            <textarea
+              id="cf-message"
+              class="contact-form__textarea"
+              name="message"
+              rows="5"
+              placeholder="Cuéntame sobre tu proyecto o consulta..."
+              required
+              minlength="10"></textarea>
+          </div>
+
+          <button class="contact-form__submit" type="submit">Enviar mensaje</button>
+        </form>
+      </section>
+
+      <aside class="contact__info">
+        <h2 class="contact__info-title">Otras formas de contacto</h2>
+        <ul class="contact__links">
+          <li>
+            <a
+              class="contact__link"
+              href="https://www.linkedin.com/in/krba-jose/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Ir a LinkedIn"
+            >
+              <LinkedIn class="contact__icon" />
+              <span>LinkedIn</span>
+            </a>
+          </li>
+          <li>
+            <a
+              class="contact__link"
+              href="https://github.com/carvaj10"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Ir a GitHub"
+            >
+              <GitHub class="contact__icon" />
+              <span>GitHub</span>
+            </a>
+          </li>
+          <li>
+            <a
+              class="contact__link"
+              href={`mailto:${email}`}
+              aria-label="Enviar correo directamente"
+            >
+              <Email class="contact__icon" />
+              <span>{email}</span>
+            </a>
+          </li>
+        </ul>
+
+        <div class="contact__availability">
+          <span class="contact__dot"></span>
+          <span class="smoke">Disponible para proyectos freelance</span>
+        </div>
+      </aside>
+    </div>
+  </main>
+</Layout>
+
+<script>
+  const form = document.getElementById('contact-form') as HTMLFormElement;
+
+  form?.addEventListener('submit', e => {
+    e.preventDefault();
+
+    const name = (form.elements.namedItem('name') as HTMLInputElement).value.trim();
+    const senderEmail = (form.elements.namedItem('email') as HTMLInputElement).value.trim();
+    const subject = (form.elements.namedItem('subject') as HTMLInputElement).value.trim();
+    const message = (form.elements.namedItem('message') as HTMLTextAreaElement).value.trim();
+
+    const body = `Nombre: ${name}\nCorreo: ${senderEmail}\n\n${message}`;
+
+    window.location.href = `mailto:joseluiscarvajal19@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  });
+
+  document.addEventListener('astro:after-swap', () => {
+    const f = document.getElementById('contact-form') as HTMLFormElement;
+    f?.addEventListener('submit', e => {
+      e.preventDefault();
+      const name = (f.elements.namedItem('name') as HTMLInputElement).value.trim();
+      const senderEmail = (f.elements.namedItem('email') as HTMLInputElement).value.trim();
+      const subject = (f.elements.namedItem('subject') as HTMLInputElement).value.trim();
+      const message = (f.elements.namedItem('message') as HTMLTextAreaElement).value.trim();
+      const body = `Nombre: ${name}\nCorreo: ${senderEmail}\n\n${message}`;
+      window.location.href = `mailto:joseluiscarvajal19@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    });
+  });
+</script>
+
+<style>
+  .contact {
+    padding: 8rem 1rem 4rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+  }
+
+  .contact__header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    max-width: 40rem;
+  }
+
+  .contact__title {
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  .contact__subtitle {
+    font-size: 1rem;
+    line-height: 1.6;
+    text-wrap: pretty;
+  }
+
+  .contact__layout {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4rem;
+    align-items: flex-start;
+  }
+
+  .contact__form-section {
+    flex: 1 1 24rem;
+  }
+
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    width: 100%;
+    max-width: 38rem;
+  }
+
+  .contact-form__group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .contact-form__label {
+    font-size: 0.875rem;
+    font-weight: 600;
+  }
+
+  .contact-form__input,
+  .contact-form__textarea {
+    padding: 0.6rem 0.875rem;
+    border-radius: 0.375rem;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background-color: rgba(var(--muted), 0.3);
+    font-size: 0.9375rem;
+    transition:
+      border-color 0.2s ease,
+      box-shadow 0.2s ease;
+    width: 100%;
+    resize: vertical;
+  }
+
+  .contact-form__input:focus,
+  .contact-form__textarea:focus {
+    outline: none;
+    border-color: rgba(var(--color), 0.7);
+    box-shadow: 0 0 0 3px rgba(var(--color), 0.15);
+  }
+
+  .contact-form__textarea {
+    min-height: 8rem;
+  }
+
+  .contact-form__submit {
+    align-self: flex-start;
+    padding: 0.65rem 1.75rem;
+    border-radius: 0.375rem;
+    background-color: rgba(var(--color), 1);
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+
+  .contact-form__submit:hover {
+    background-color: rgba(var(--color-button-accent-hover), 1);
+  }
+
+  .contact__info {
+    flex: 0 0 16rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .contact__info-title {
+    font-size: 1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: rgba(var(--color-text-muted), 1);
+  }
+
+  .contact__links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.875rem;
+  }
+
+  .contact__link {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    font-size: 0.9375rem;
+    transition: color 0.2s ease;
+    word-break: break-all;
+  }
+
+  .contact__link:hover {
+    color: rgba(var(--color), 1);
+  }
+
+  .contact__icon {
+    width: 1.2rem;
+    flex-shrink: 0;
+  }
+
+  .contact__availability {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+  }
+
+  .contact__dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background-color: #4ade80;
+    flex-shrink: 0;
+    box-shadow: 0 0 6px #4ade80;
+  }
+</style>
