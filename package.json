@@ -26,6 +26,12 @@
     "uuid": "9.0.1"
   },
   "devDependencies": {
+    "cz-conventional-changelog": "^3.3.0",
     "prettier-plugin-astro": "^0.14.1"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
